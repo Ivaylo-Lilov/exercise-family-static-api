@@ -39,9 +39,6 @@ def get_all_members():
 
 @app.route('/member/<int:member_id>', methods=['GET'])
 def get_member(member_id):
-    """
-    Endpoint para obtener un miembro por su ID.
-    """
     member = jackson_family.get_member(member_id)
     if member:
         return jsonify(member), 200
