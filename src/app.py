@@ -8,10 +8,10 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 CORS(app)
 
-# Inicializamos la familia Jackson
+
 jackson_family = FamilyStructure("Jackson")
 
-# Miembros iniciales
+
 initial_members = [
     {"first_name": "John", "age": 33, "lucky_numbers": [7, 13, 22]},
     {"first_name": "Jane", "age": 35, "lucky_numbers": [10, 14, 3]},
@@ -30,9 +30,7 @@ def sitemap():
 
 @app.route('/members', methods=['GET'])
 def get_all_members():
-    """
-    Endpoint para obtener todos los miembros de la familia.
-    """
+
     try:
         members = jackson_family.get_all_members()
         return jsonify(members), 200
@@ -52,9 +50,7 @@ def get_member(member_id):
 
 @app.route('/member', methods=['POST'])
 def add_member():
-    """
-    Endpoint para agregar un nuevo miembro.
-    """
+
     try:
         data = request.get_json()
         if not data or "first_name" not in data or "age" not in data or "lucky_numbers" not in data:
@@ -67,9 +63,7 @@ def add_member():
 
 @app.route('/member/<int:member_id>', methods=['DELETE'])
 def delete_member(member_id):
-    """
-    Endpoint para eliminar un miembro por su ID.
-    """
+
     try:
         member = jackson_family.get_member(member_id)
         if member:
@@ -80,7 +74,6 @@ def delete_member(member_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Ejecutar servidor
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
     app.run(host='0.0.0.0', port=PORT, debug=True)
